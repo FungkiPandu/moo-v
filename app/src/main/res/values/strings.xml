@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name" translatable="false">Moo-V</string>
+    <string name="change_language_settings">Change language</string>
+    <string name="banner_base_url" translatable="false">https://image.tmdb.org/t/p/w780</string>
+
+    <string name="movie_banner">Movie banner</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_tv_show">TV Show</string>
+    <string name="title_favorite">Liked</string>
+    <string name="max_score" translatable="false">/100</string>
+    <string name="title">Title</string>
+    <string name="original_title">Original Title</string>
+    <string name="release_date">Release Date</string>
+    <string name="popularity">Popularity</string>
+    <string name="user_score">User Score</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_message">An error occurred while retrieving %s from Server. Please try again</string>
+    <string name="movie_list">movie list</string>
+    <string name="tv_list">TV-show list</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel">Cancel</string>
+    <string name="favorite_button">favorite button</string>
+    <string name="no_item_text">No item yet to be shown</string>
+</resources>

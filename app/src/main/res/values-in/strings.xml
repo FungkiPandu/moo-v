@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_movie">Film</string>
+    <string name="title_tv_show">Acara TV</string>
+    <string name="title_favorite">Disukai</string>
+    <string name="movie_banner">Spanduk Film</string>
+    <string name="change_language_settings">Ubah bahasa</string>
+
+    <string name="title">Judul</string>
+    <string name="original_title">Judul Asli</string>
+    <string name="popularity">Popularitas</string>
+    <string name="release_date">Tanggal Rilis</string>
+    <string name="user_score">Penilaian Pengguna</string>
+    <string name="error_dialog_title">Kesalahan!</string>
+    <string name="error_dialog_message">Terjadi kesalahan ketika mengambil %s dari Server. Silahkan coba lagi</string>
+    <string name="movie_list">daftar film</string>
+    <string name="tv_list">daftar acara TV</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="cancel">Batal</string>
+    <string name="favorite_button">Tombol suka</string>
+    <string name="no_item_text">Belum ada item yang dapat ditampilkan</string>
+</resources>
