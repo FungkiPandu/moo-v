@@ -20,7 +20,8 @@ import xyz.neopandu.moov.models.Movie
 class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, MainViewModelFactory(application)).get(MainViewModel::class.java)
+        ViewModelProviders.of(this, MainViewModelFactory(application))
+            .get(MainViewModel::class.java)
     }
     private val movieFragment =
         MovieFragment.newInstance(MovieFragment.FragmentType.MOVIE)
@@ -28,25 +29,27 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
         MovieFragment.newInstance(MovieFragment.FragmentType.TV_SHOW)
     private val favoriteFragment = FavoriteFragment()
     private val fragmentManager by lazy { supportFragmentManager }
-    private var pageFragment : Fragment = movieFragment
+    private var pageFragment: Fragment = movieFragment
     private var isErrorMovieShowing = false
     private var isErrorTVShowing = false
 
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                pageFragment = movieFragment
+    private val onNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    pageFragment = movieFragment
+                }
+                R.id.navigation_dashboard -> {
+                    pageFragment = tvShowFragment
+                }
+                R.id.navigation_favorite -> {
+                    pageFragment = favoriteFragment
+                }
             }
-            R.id.navigation_dashboard -> {
-                pageFragment = tvShowFragment
-            }
-            R.id.navigation_favorite -> {
-                pageFragment = favoriteFragment
-            }
+            fragmentManager.beginTransaction().replace(R.id.fragment_place_holder, pageFragment)
+                .commit()
+            true
         }
-        fragmentManager.beginTransaction().replace(R.id.fragment_place_holder, pageFragment).commit()
-        true
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,11 +76,10 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
         viewModel
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        if (outState != null) {
-            supportFragmentManager.putFragment(outState, "page", pageFragment)
-            outState.putInt("selectedId", nav_view.selectedItemId)
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        supportFragmentManager.putFragment(outState, "page", pageFragment)
+        outState.putInt("selectedId", nav_view.selectedItemId)
+
         super.onSaveInstanceState(outState)
     }
 
@@ -95,7 +97,8 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 //    }
 
     override fun onListFragmentInteraction(item: Movie) {
-        val intent = Intent(this, DetailActivity::class.java).putExtra(DetailActivity.EXTRA_MOVIE_KEY, item)
+        val intent =
+            Intent(this, DetailActivity::class.java).putExtra(DetailActivity.EXTRA_MOVIE_KEY, item)
         startActivity(intent)
         Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
     }
