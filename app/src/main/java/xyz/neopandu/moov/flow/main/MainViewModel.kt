@@ -14,6 +14,7 @@ import xyz.neopandu.moov.data.repository.MovieRepository
 import xyz.neopandu.moov.data.repository.ResponseListener
 import xyz.neopandu.moov.data.repository.TVRepository
 import xyz.neopandu.moov.flow.main.movieList.MovieFragment
+import xyz.neopandu.moov.models.Meta
 import xyz.neopandu.moov.models.Movie
 
 class MainViewModel(application: Application) : ViewModel() {
@@ -75,9 +76,9 @@ class MainViewModel(application: Application) : ViewModel() {
 
     fun fetchMovieList(page: Int = 1) {
         _showMovieLoading.postValue(true)
-        movieRepository.fetchMovieList(page, object : ResponseListener {
-            override fun onResponse(page: Int, movies: List<Movie>) {
-                if (page == 1) {
+        movieRepository.fetchPopularMovies(page, object : ResponseListener {
+            override fun onResponse(meta: Meta, movies: List<Movie>) {
+                if (meta.page == 1) {
                     _movieList.clear()
                     _moviePage = 1
                 }
@@ -100,8 +101,8 @@ class MainViewModel(application: Application) : ViewModel() {
         _showTVLoading.postValue(true)
 
         tvRepository.fetchPopularTVs(page, object : ResponseListener {
-            override fun onResponse(page: Int, movies: List<Movie>) {
-                if (page == 1) {
+            override fun onResponse(meta: Meta, movies: List<Movie>) {
+                if (meta.page == 1) {
                     _tvList.clear()
                     _tvPage = 1
                 }
