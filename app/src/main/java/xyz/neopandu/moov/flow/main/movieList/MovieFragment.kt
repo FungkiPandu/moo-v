@@ -77,15 +77,6 @@ class MovieFragment : Fragment() {
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        when (type) {
-            FragmentType.MOVIE, FragmentType.FAVORITE_MOVIE -> favoriteViewModel.updateFavoriteMovies()
-            FragmentType.TV_SHOW, FragmentType.FAVORITE_TV -> favoriteViewModel.updateFavoriteTVs()
-        }
-    }
-
     private fun initToolbar() {
         when (type) {
             FragmentType.MOVIE -> {
@@ -162,7 +153,7 @@ class MovieFragment : Fragment() {
                 swipeRefreshLayout.setOnRefreshListener {
                     viewModel.fetchMovieList()
                 }
-                favoriteViewModel.favMovies.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favoriteMovies.observe(viewLifecycleOwner, Observer {
                     adapter?.updateFavorites(it)
                 })
             }
@@ -178,12 +169,12 @@ class MovieFragment : Fragment() {
                 swipeRefreshLayout.setOnRefreshListener {
                     viewModel.fetchTvShowList()
                 }
-                favoriteViewModel.favTVs.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favoriteTVs.observe(viewLifecycleOwner, Observer {
                     adapter?.updateFavorites(it)
                 })
             }
             FragmentType.FAVORITE_MOVIE -> {
-                favoriteViewModel.favMovies.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favoriteMovies.observe(viewLifecycleOwner, Observer {
                     val isEmpty = checkToShowEmpty(it)
                     if (isEmpty) return@Observer
 
@@ -193,7 +184,7 @@ class MovieFragment : Fragment() {
                 swipeRefreshLayout.isEnabled = false
             }
             FragmentType.FAVORITE_TV -> {
-                favoriteViewModel.favTVs.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favoriteTVs.observe(viewLifecycleOwner, Observer {
                     val isEmpty = checkToShowEmpty(it)
                     if (isEmpty) return@Observer
 

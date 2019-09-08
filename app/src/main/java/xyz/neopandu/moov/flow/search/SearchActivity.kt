@@ -83,10 +83,4 @@ class SearchActivity : AppCompatActivity(), OnListFragmentInteractionListener {
     override fun toggleFavoriteButtonClicked(item: Movie) {
         favoriteViewModel.toggleFavorite(item)
     }
-
-    override fun onResume() {
-        super.onResume()
-        favoriteViewModel.updateFavoriteMovies()
-        favoriteViewModel.updateFavoriteTVs()
-    }
 }
