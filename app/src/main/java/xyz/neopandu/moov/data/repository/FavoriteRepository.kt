@@ -1,6 +1,7 @@
 package xyz.neopandu.moov.data.repository
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import xyz.neopandu.moov.data.FavoriteDao
 import xyz.neopandu.moov.data.database.MovieDatabase
 import xyz.neopandu.moov.models.Movie
@@ -9,12 +10,16 @@ class FavoriteRepository(application: Application) {
 
     private lateinit var favoriteDao: FavoriteDao
 
+
     init {
         val database: MovieDatabase? = MovieDatabase.getInstance(application.applicationContext)
         database?.let {
             favoriteDao = it.favoriteDao()
         }
     }
+
+    fun getFavoriteMoviesLiveData(): LiveData<List<Movie>> = favoriteDao.favoriteMovies()
+    fun getFavoriteTVsLiveData(): LiveData<List<Movie>> = favoriteDao.favoriteTVs()
 
     suspend fun saveMovie(movie: Movie) {
         favoriteDao.saveMovie(movie)

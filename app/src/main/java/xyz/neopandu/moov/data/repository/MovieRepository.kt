@@ -1,11 +1,13 @@
 package xyz.neopandu.moov.data.repository
 
+import android.util.Log
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import xyz.neopandu.moov.data.tmdbKey
 import xyz.neopandu.moov.helper.TMDBHelper
 import xyz.neopandu.moov.models.Meta
 import xyz.neopandu.moov.models.Movie
@@ -14,17 +16,21 @@ import java.util.*
 class MovieRepository {
 
     private fun doRequest(url: String, callback: ResponseListener) {
-        AndroidNetworking.get(url).build()
+        Log.e("doRequest", url)
+        AndroidNetworking.get(url).addQueryParameter("api_key", tmdbKey).build()
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
-                    GlobalScope.launch {
-                        response?.let { obj ->
-                            callback.onResponse(parseMeta(obj), parseMovies(obj))
+                    response?.let { obj ->
+                        val meta = parseMeta(obj)
+                        print("total_pages: ${meta.totalPages}")
+                        GlobalScope.launch {
+                            callback.onResponse(meta, parseMovies(obj))
                         }
                     }
                 }
 
                 override fun onError(anError: ANError?) {
+                    Log.e("MovieRepository", "$url => " + anError?.errorBody)
                     callback.onError(anError)
                 }
             })
@@ -40,25 +46,29 @@ class MovieRepository {
         val resultArray = obj.getJSONArray("results")
         val size = resultArray.length()
         val movies = mutableListOf<Movie>()
-        for (i in 0 until size) {
-            val resObj = resultArray.getJSONObject(i)
-            val objId = resObj.getInt("id")
-            movies.add(
-                Movie(
-                    id = objId,
-                    title = resObj.getString("title"),
-                    oriLang = resObj.getString("original_language"),
-                    oriTitle = resObj.getString("original_title"),
-                    description = resObj.getString("overview"),
-                    posterPath = resObj.getString("poster_path"),
-                    bannerPath = resObj.getString("backdrop_path"),
-                    releaseDate = resObj.getString("release_date"),
-                    score = resObj.getDouble("vote_average") * 10,
-                    popularity = resObj.getDouble("popularity"),
-                    movieType = Movie.MovieType.MOVIE,
-                    isFavorite = false
+        try {
+            for (i in 0 until size) {
+                val resObj = resultArray.getJSONObject(i)
+                val objId = resObj.getInt("id")
+                movies.add(
+                    Movie(
+                        id = objId,
+                        title = resObj.getString("title"),
+                        oriLang = resObj.getString("original_language"),
+                        oriTitle = resObj.getString("original_title"),
+                        description = resObj.getString("overview"),
+                        posterPath = resObj.getString("poster_path"),
+                        bannerPath = resObj.getString("backdrop_path"),
+                        releaseDate = resObj.getString("release_date"),
+                        score = resObj.getDouble("vote_average") * 10,
+                        popularity = resObj.getDouble("popularity"),
+                        movieType = Movie.MovieType.MOVIE,
+                        isFavorite = false
+                    )
                 )
-            )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         return movies
     }

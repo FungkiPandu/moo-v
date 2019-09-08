@@ -18,9 +18,11 @@ import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_movie_list.view.*
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.adapters.MyMovieRecyclerViewAdapter
+import xyz.neopandu.moov.flow.FavoriteViewModel
+import xyz.neopandu.moov.flow.FavoriteViewModelFactory
 import xyz.neopandu.moov.flow.main.MainViewModel
-import xyz.neopandu.moov.flow.main.MainViewModelFactory
 import xyz.neopandu.moov.flow.main.OnListFragmentInteractionListener
+import xyz.neopandu.moov.flow.search.SearchActivity
 import xyz.neopandu.moov.models.Movie
 
 /**
@@ -31,10 +33,13 @@ import xyz.neopandu.moov.models.Movie
 class MovieFragment : Fragment() {
 
     private val viewModel by lazy {
+        ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
+    }
+    private val favoriteViewModel by lazy {
         ViewModelProviders.of(
             requireActivity(),
-            MainViewModelFactory(requireActivity().application)
-        ).get(MainViewModel::class.java)
+            FavoriteViewModelFactory(requireActivity().application)
+        ).get(FavoriteViewModel::class.java)
     }
     private var type: FragmentType = FragmentType.MOVIE
     private var listener: OnListFragmentInteractionListener? = null
@@ -76,8 +81,8 @@ class MovieFragment : Fragment() {
         super.onResume()
 
         when (type) {
-            FragmentType.MOVIE, FragmentType.FAVORITE_MOVIE -> viewModel.updateFavoriteMovies()
-            FragmentType.TV_SHOW, FragmentType.FAVORITE_TV -> viewModel.updateFavoriteTVs()
+            FragmentType.MOVIE, FragmentType.FAVORITE_MOVIE -> favoriteViewModel.updateFavoriteMovies()
+            FragmentType.TV_SHOW, FragmentType.FAVORITE_TV -> favoriteViewModel.updateFavoriteTVs()
         }
     }
 
@@ -108,6 +113,9 @@ class MovieFragment : Fragment() {
                     val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
                     startActivity(mIntent)
                 }
+                R.id.action_search -> {
+                    startActivity(Intent(requireActivity(), SearchActivity::class.java))
+                }
             }
             super.onOptionsItemSelected(it)
         }
@@ -132,7 +140,6 @@ class MovieFragment : Fragment() {
                     noItemLayout.no_item_image.setImageResource(R.drawable.ic_live_tv_white_24dp)
                 }
             }
-
             true
         } else {
             movieList.visibility = View.VISIBLE
@@ -155,7 +162,7 @@ class MovieFragment : Fragment() {
                 swipeRefreshLayout.setOnRefreshListener {
                     viewModel.fetchMovieList()
                 }
-                viewModel.favMovies.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favMovies.observe(viewLifecycleOwner, Observer {
                     adapter?.updateFavorites(it)
                 })
             }
@@ -171,12 +178,12 @@ class MovieFragment : Fragment() {
                 swipeRefreshLayout.setOnRefreshListener {
                     viewModel.fetchTvShowList()
                 }
-                viewModel.favTVs.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favTVs.observe(viewLifecycleOwner, Observer {
                     adapter?.updateFavorites(it)
                 })
             }
             FragmentType.FAVORITE_MOVIE -> {
-                viewModel.favMovies.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favMovies.observe(viewLifecycleOwner, Observer {
                     val isEmpty = checkToShowEmpty(it)
                     if (isEmpty) return@Observer
 
@@ -186,7 +193,7 @@ class MovieFragment : Fragment() {
                 swipeRefreshLayout.isEnabled = false
             }
             FragmentType.FAVORITE_TV -> {
-                viewModel.favTVs.observe(viewLifecycleOwner, Observer {
+                favoriteViewModel.favTVs.observe(viewLifecycleOwner, Observer {
                     val isEmpty = checkToShowEmpty(it)
                     if (isEmpty) return@Observer
 

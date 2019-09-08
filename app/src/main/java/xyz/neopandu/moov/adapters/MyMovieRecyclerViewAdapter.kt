@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.row_item_movie.view.*
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.flow.main.OnListFragmentInteractionListener
 import xyz.neopandu.moov.models.Movie
+import java.util.*
 
 /**
  * [RecyclerView.Adapter] that can display a [Movie] and makes a call to the
@@ -46,15 +47,18 @@ class MyMovieRecyclerViewAdapter(
     fun updateValues(items: List<Movie>) {
         mValues.clear()
         mValues.addAll(items)
-        notifyDataSetChanged()
+        updateFavoriteButton()
     }
 
     fun updateFavorites(favorites: List<Movie>) {
         mFavorites.clear()
         mFavorites.addAll(favorites)
-        for(i in 0 until mValues.size) {
-            val movie = mValues[i]
-            mValues[i] = movie.copy(isFavorite = mFavorites.any { it.id == movie.id })
+        updateFavoriteButton()
+    }
+
+    private fun updateFavoriteButton() {
+        for (i in 0 until mValues.size) {
+            mValues[i].isFavorite = mFavorites.any { it.id == mValues[i].id }
         }
         notifyDataSetChanged()
     }
@@ -81,13 +85,17 @@ class MyMovieRecyclerViewAdapter(
 
         fun bind(item: Movie) {
             val releaseYear = item.releaseDate.replace("–", "-").split("-")[0]
-            val title = item.title + " (" + releaseYear + ")"
+            val title = item.title + if (releaseYear.isNotBlank()) " ($releaseYear)" else ""
             mTitle.text = title
-            Glide.with(context).load(context.getString(R.string.banner_base_url) + item.bannerPath).into(mBanner)
+            var bannerUrl = context.getString(R.string.banner_base_url) + item.bannerPath
+            if (item.bannerPath == "null" && item.posterPath != "null") {
+                bannerUrl = context.getString(R.string.poster_base_url) + item.posterPath
+            }
+            Glide.with(context).load(bannerUrl).into(mBanner)
 
             if (item.oriLang != "en") {
                 mOriTitle.visibility = View.VISIBLE
-                val oriTitle = "[${item.oriLang.toUpperCase()}] ${item.oriTitle}"
+                val oriTitle = "[${item.oriLang.toUpperCase(Locale.ENGLISH)}] ${item.oriTitle}"
                 mOriTitle.text = oriTitle
             } else {
                 mOriTitle.visibility = View.GONE

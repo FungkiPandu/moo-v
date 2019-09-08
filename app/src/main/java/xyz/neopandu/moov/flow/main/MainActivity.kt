@@ -2,7 +2,6 @@ package xyz.neopandu.moov.flow.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -11,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.neopandu.moov.R
+import xyz.neopandu.moov.flow.FavoriteViewModel
+import xyz.neopandu.moov.flow.FavoriteViewModelFactory
 import xyz.neopandu.moov.flow.detail.DetailActivity
 import xyz.neopandu.moov.flow.main.favorite.FavoriteFragment
 import xyz.neopandu.moov.flow.main.movieList.MovieFragment
@@ -20,8 +21,11 @@ import xyz.neopandu.moov.models.Movie
 class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, MainViewModelFactory(application))
-            .get(MainViewModel::class.java)
+        ViewModelProviders.of(this).get(MainViewModel::class.java)
+    }
+    private val favoriteViewModel by lazy {
+        ViewModelProviders.of(this, FavoriteViewModelFactory(application))
+            .get(FavoriteViewModel::class.java)
     }
     private val movieFragment =
         MovieFragment.newInstance(MovieFragment.FragmentType.MOVIE)
@@ -74,6 +78,7 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
         //cold start
         viewModel
+        favoriteViewModel
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -83,28 +88,14 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
         super.onSaveInstanceState(outState)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.main_menu, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.itemId == R.id.action_change_settings) {
-//            val mIntent = Intent(ACTION_LOCALE_SETTINGS)
-//            startActivity(mIntent)
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-
     override fun onListFragmentInteraction(item: Movie) {
         val intent =
             Intent(this, DetailActivity::class.java).putExtra(DetailActivity.EXTRA_MOVIE_KEY, item)
         startActivity(intent)
-        Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
     }
 
     override fun toggleFavoriteButtonClicked(item: Movie) {
-        viewModel.toggleFavorite(item)
+        favoriteViewModel.toggleFavorite(item)
     }
 
     private fun showErrorDialog(movieType: MovieFragment.FragmentType, action: () -> Unit) {

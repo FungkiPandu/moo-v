@@ -19,4 +19,5 @@
     <string name="cancel">Batal</string>
     <string name="favorite_button">Tombol suka</string>
     <string name="no_item_text">Belum ada item yang dapat ditampilkan</string>
+    <string name="search">Pencarian</string>
 </resources>

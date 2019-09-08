@@ -1,6 +1,5 @@
 package xyz.neopandu.moov.helper
 
-import xyz.neopandu.moov.data.tmdbKey
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -9,10 +8,6 @@ class TMDBHelper {
     abstract class BaseTmdbURL {
         val baseUrl = "https://api.themoviedb.org/3"
         var url: String = baseUrl
-
-        init {
-            addQuery("key", tmdbKey)
-        }
 
         private fun removeExistingQuery(key: String): BaseTmdbURL {
             val idx = url.indexOf(key)
@@ -25,9 +20,10 @@ class TMDBHelper {
         fun addQuery(key: String, data: String, encodeData: Boolean = false): BaseTmdbURL {
             removeExistingQuery(key)
             if (!url.contains('?')) url += "?"
-            if (url.last() != '?') url != "&"
+            if (url.last() != '?') url += "&"
             val newQuery = "$key=${if (encodeData) URLEncoder.encode(data, "UTF-8") else data}"
             url += newQuery
+            print(url)
             return this
         }
 

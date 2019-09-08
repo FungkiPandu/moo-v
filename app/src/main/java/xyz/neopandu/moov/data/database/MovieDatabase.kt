@@ -12,6 +12,7 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
 
     companion object {
+        @JvmStatic
         private var instance: MovieDatabase? = null
         fun getInstance(context: Context): MovieDatabase? {
             if (instance == null) {

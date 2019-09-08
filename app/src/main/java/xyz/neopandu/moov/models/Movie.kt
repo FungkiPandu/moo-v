@@ -23,7 +23,7 @@ data class Movie(
     val movieType: MovieType,
     var isFavorite: Boolean
 ) : Parcelable {
-    enum class MovieType {
-        MOVIE, TV_SHOW
+    enum class MovieType(val value: String) {
+        MOVIE("MOVIE"), TV_SHOW("TV SHOW")
     }
 }

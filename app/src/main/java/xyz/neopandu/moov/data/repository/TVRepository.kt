@@ -1,32 +1,33 @@
 package xyz.neopandu.moov.data.repository
 
+import android.util.Log
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import xyz.neopandu.moov.data.tmdbKey
 import xyz.neopandu.moov.helper.TMDBHelper
 import xyz.neopandu.moov.models.Meta
 import xyz.neopandu.moov.models.Movie
 
 class TVRepository {
 
-    private val baseURL = "https://api.themoviedb.org/3/tv/"
-    private val popularPath = "popular"
-
     private fun doRequest(url: String, callback: ResponseListener) {
-        AndroidNetworking.get(url).build()
+        Log.e("doRequest", url)
+        AndroidNetworking.get(url).addQueryParameter("api_key", tmdbKey).build()
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
-                    GlobalScope.launch {
-                        response?.let { obj ->
+                    response?.let { obj ->
+                        GlobalScope.launch {
                             callback.onResponse(parseMeta(obj), parseTVs(obj))
                         }
                     }
                 }
 
                 override fun onError(anError: ANError?) {
+                    Log.e("TVRepository", "$url => " + anError?.errorBody)
                     callback.onError(anError)
                 }
             })
@@ -42,25 +43,29 @@ class TVRepository {
         val resultArray = obj.getJSONArray("results")
         val size = resultArray.length()
         val movies = mutableListOf<Movie>()
-        for (i in 0 until size) {
-            val resObj = resultArray.getJSONObject(i)
-            val objId = resObj.getInt("id")
-            movies.add(
-                Movie(
-                    id = objId,
-                    title = resObj.getString("name"),
-                    oriLang = resObj.getString("original_language"),
-                    oriTitle = resObj.getString("original_name"),
-                    description = resObj.getString("overview"),
-                    posterPath = resObj.getString("poster_path"),
-                    bannerPath = resObj.getString("backdrop_path"),
-                    releaseDate = resObj.getString("first_air_date"),
-                    score = resObj.getDouble("vote_average") * 10,
-                    popularity = resObj.getDouble("popularity"),
-                    movieType = Movie.MovieType.TV_SHOW,
-                    isFavorite = false
+        try {
+            for (i in 0 until size) {
+                val resObj = resultArray.getJSONObject(i)
+                val objId = resObj.getInt("id")
+                movies.add(
+                    Movie(
+                        id = objId,
+                        title = resObj.getString("name"),
+                        oriLang = resObj.getString("original_language"),
+                        oriTitle = resObj.getString("original_name"),
+                        description = resObj.getString("overview"),
+                        posterPath = resObj.getString("poster_path"),
+                        bannerPath = resObj.getString("backdrop_path"),
+                        releaseDate = resObj.getString("first_air_date"),
+                        score = resObj.getDouble("vote_average") * 10,
+                        popularity = resObj.getDouble("popularity"),
+                        movieType = Movie.MovieType.TV_SHOW,
+                        isFavorite = false
+                    )
                 )
-            )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         return movies
     }

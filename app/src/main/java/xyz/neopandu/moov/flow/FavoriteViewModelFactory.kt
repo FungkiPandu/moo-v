@@ -1,4 +1,4 @@
-package xyz.neopandu.moov.flow.main
+package xyz.neopandu.moov.flow
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 
 
 @Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val mApplication: Application) : ViewModelProvider.Factory {
+class FavoriteViewModelFactory(private val mApplication: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(mApplication) as T
+        return FavoriteViewModel(mApplication) as T
     }
 }

@@ -106,7 +106,7 @@ class DetailActivity : AppCompatActivity() {
             }
 
         }
-        return super.onOptionsItemSelected(menuItem)
+        return false
     }
 
     companion object {

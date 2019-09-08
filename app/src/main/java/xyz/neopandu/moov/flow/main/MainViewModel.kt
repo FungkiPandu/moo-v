@@ -1,15 +1,9 @@
 package xyz.neopandu.moov.flow.main
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.androidnetworking.error.ANError
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import xyz.neopandu.moov.data.repository.FavoriteRepository
 import xyz.neopandu.moov.data.repository.MovieRepository
 import xyz.neopandu.moov.data.repository.ResponseListener
 import xyz.neopandu.moov.data.repository.TVRepository
@@ -17,9 +11,8 @@ import xyz.neopandu.moov.flow.main.movieList.MovieFragment
 import xyz.neopandu.moov.models.Meta
 import xyz.neopandu.moov.models.Movie
 
-class MainViewModel(application: Application) : ViewModel() {
+class MainViewModel : ViewModel() {
 
-    private val favoriteRepository = FavoriteRepository(application)
     private val movieRepository = MovieRepository()
     private val tvRepository = TVRepository()
 
@@ -42,14 +35,6 @@ class MainViewModel(application: Application) : ViewModel() {
     val tvShows: LiveData<List<Movie>>
         get() = _tvShows
 
-    private val _favMovies = MutableLiveData<List<Movie>>()
-    val favMovies: LiveData<List<Movie>>
-        get() = _favMovies
-
-    private val _favTVs = MutableLiveData<List<Movie>>()
-    val favTVs: LiveData<List<Movie>>
-        get() = _favTVs
-
     private val _showError = MutableLiveData<Pair<MovieFragment.FragmentType, () -> Unit>>()
     val showError: LiveData<Pair<MovieFragment.FragmentType, () -> Unit>>
         get() = _showError
@@ -60,8 +45,6 @@ class MainViewModel(application: Application) : ViewModel() {
     init {
         fetchMovieList(1)
         fetchTvShowList(1)
-        updateFavoriteMovies()
-        updateFavoriteTVs()
     }
 
     fun fetchNextMovieList() {
@@ -84,8 +67,6 @@ class MainViewModel(application: Application) : ViewModel() {
                 }
                 _movieList.addAll(movies)
                 _movies.postValue(_movieList)
-
-                updateFavoriteMovies()
                 _showMovieLoading.postValue(false)
             }
 
@@ -108,7 +89,6 @@ class MainViewModel(application: Application) : ViewModel() {
                 }
                 _tvList.addAll(movies)
                 _tvShows.postValue(_tvList)
-                updateFavoriteTVs()
                 _showTVLoading.postValue(false)
             }
 
@@ -117,45 +97,5 @@ class MainViewModel(application: Application) : ViewModel() {
                 _showError.postValue(MovieFragment.FragmentType.TV_SHOW to { fetchTvShowList(page) })
             }
         })
-    }
-
-    fun toggleFavorite(movie: Movie) {
-        GlobalScope.launch {
-            if (movie.isFavorite) {
-                removeFavoriteAsync(movie).await()
-            } else {
-                addFavoriteAsync(movie).await()
-            }
-            refreshSavedMovies(movie.movieType)
-        }
-    }
-
-    private suspend fun removeFavoriteAsync(movie: Movie): Deferred<Unit> =
-        GlobalScope.async {
-            favoriteRepository.deleteSavedMovie(movie)
-        }
-
-    private suspend fun addFavoriteAsync(movie: Movie): Deferred<Unit> =
-        GlobalScope.async {
-            favoriteRepository.saveMovie(movie)
-        }
-
-    private fun refreshSavedMovies(movieType: Movie.MovieType) {
-        when (movieType) {
-            Movie.MovieType.MOVIE -> updateFavoriteMovies()
-            Movie.MovieType.TV_SHOW -> updateFavoriteTVs()
-        }
-    }
-
-    fun updateFavoriteMovies() {
-        GlobalScope.launch {
-            _favMovies.postValue(favoriteRepository.getMovies())
-        }
-    }
-
-    fun updateFavoriteTVs() {
-        GlobalScope.launch {
-            _favTVs.postValue(favoriteRepository.getTVs())
-        }
     }
 }
