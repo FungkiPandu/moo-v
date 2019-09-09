@@ -113,8 +113,10 @@ class SearchViewModel : ViewModel() {
 
     fun fetchNextPage(movieType: Movie.MovieType) {
         if (movieType == Movie.MovieType.MOVIE) {
+            if (lastMovieQuery.isBlank()) return
             searchMovie(query = lastMovieQuery, page = moviePage)
         } else {
+            if (lastTVQuery.isBlank()) return
             searchTV(query = lastTVQuery, page = tvPage)
         }
     }

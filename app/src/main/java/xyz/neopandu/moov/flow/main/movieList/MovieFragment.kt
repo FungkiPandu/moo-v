@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.fragment_movie_list.view.*
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.adapters.MyMovieRecyclerViewAdapter
 import xyz.neopandu.moov.flow.FavoriteViewModel
@@ -23,7 +23,6 @@ import xyz.neopandu.moov.flow.FavoriteViewModelFactory
 import xyz.neopandu.moov.flow.main.MainViewModel
 import xyz.neopandu.moov.flow.main.OnListFragmentInteractionListener
 import xyz.neopandu.moov.flow.search.SearchActivity
-import xyz.neopandu.moov.models.Movie
 
 /**
  * A fragment representing a list of Items.
@@ -48,7 +47,6 @@ class MovieFragment : Fragment() {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var appbar: AppBarLayout
     private lateinit var toolbar: Toolbar
-    private lateinit var noItemLayout: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +66,6 @@ class MovieFragment : Fragment() {
         toolbar = view.findViewById(R.id.toolbar)
         movieList = view.findViewById(R.id.movie_list)
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
-        noItemLayout = view.findViewById(R.id.no_item_layout)
 
         initToolbar()
         initRecyclerView()
@@ -118,27 +115,6 @@ class MovieFragment : Fragment() {
         movieList.adapter = this@MovieFragment.adapter
     }
 
-    private fun checkToShowEmpty(movies: List<Movie>): Boolean {
-        return if (movies.isEmpty()) {
-            movieList.visibility = View.GONE
-            noItemLayout.visibility = View.VISIBLE
-
-            when (type) {
-                FragmentType.MOVIE, FragmentType.FAVORITE_MOVIE -> {
-                    noItemLayout.no_item_image.setImageResource(R.drawable.ic_movie_white_24dp)
-                }
-                FragmentType.TV_SHOW, FragmentType.FAVORITE_TV -> {
-                    noItemLayout.no_item_image.setImageResource(R.drawable.ic_live_tv_white_24dp)
-                }
-            }
-            true
-        } else {
-            movieList.visibility = View.VISIBLE
-            noItemLayout.visibility = View.GONE
-            false
-        }
-    }
-
     private fun loadData() {
         when (type) {
             FragmentType.MOVIE -> {
@@ -146,8 +122,6 @@ class MovieFragment : Fragment() {
                     swipeRefreshLayout.isRefreshing = it
                 })
                 viewModel.movies.observe(viewLifecycleOwner, Observer {
-                    val isEmpty = checkToShowEmpty(it)
-                    if (isEmpty) return@Observer
                     adapter?.updateValues(it)
                 })
                 swipeRefreshLayout.setOnRefreshListener {
@@ -162,9 +136,11 @@ class MovieFragment : Fragment() {
                     swipeRefreshLayout.isRefreshing = it
                 })
                 viewModel.tvShows.observe(viewLifecycleOwner, Observer {
-                    val isEmpty = checkToShowEmpty(it)
-                    if (isEmpty) return@Observer
                     adapter?.updateValues(it)
+                    adapter?.emptyDrawable = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_live_tv_white_24dp
+                    )
                 })
                 swipeRefreshLayout.setOnRefreshListener {
                     viewModel.fetchTvShowList()
@@ -175,9 +151,6 @@ class MovieFragment : Fragment() {
             }
             FragmentType.FAVORITE_MOVIE -> {
                 favoriteViewModel.favoriteMovies.observe(viewLifecycleOwner, Observer {
-                    val isEmpty = checkToShowEmpty(it)
-                    if (isEmpty) return@Observer
-
                     adapter?.updateValues(it)
                     adapter?.updateFavorites(it)
                 })
@@ -185,11 +158,12 @@ class MovieFragment : Fragment() {
             }
             FragmentType.FAVORITE_TV -> {
                 favoriteViewModel.favoriteTVs.observe(viewLifecycleOwner, Observer {
-                    val isEmpty = checkToShowEmpty(it)
-                    if (isEmpty) return@Observer
-
                     adapter?.updateValues(it)
                     adapter?.updateFavorites(it)
+                    adapter?.emptyDrawable = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_live_tv_white_24dp
+                    )
                 })
                 swipeRefreshLayout.isEnabled = false
             }

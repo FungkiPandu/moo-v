@@ -71,7 +71,7 @@ class SearchActivity : AppCompatActivity(), OnListFragmentInteractionListener {
     }
 
     private fun doSearch(query: String) {
-        searchViewModel.search(query.trim())
+        searchViewModel.search(query)
     }
 
     override fun onListFragmentInteraction(item: Movie) {

@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import xyz.neopandu.moov.R
 import xyz.neopandu.moov.adapters.MyMovieRecyclerViewAdapter
 import xyz.neopandu.moov.flow.FavoriteViewModel
 import xyz.neopandu.moov.flow.FavoriteViewModelFactory
@@ -75,6 +77,11 @@ class SearchFragment : Fragment() {
         initRecyclerView()
         listenLoading()
         listenFavoriteList()
+
+        if (movieType == Movie.MovieType.TV_SHOW) {
+            adapter.emptyDrawable =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_live_tv_white_24dp)
+        }
 
         return swipeRefreshLayout
     }

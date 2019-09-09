@@ -26,30 +26,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <LinearLayout
-        android:id="@+id/no_item_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        tools:ignore="UseCompoundDrawables">
-
-        <ImageView
-            android:id="@+id/no_item_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:tint="@color/colorAccent"
-            android:src="@drawable/ic_movie_white_24dp"
-            android:contentDescription="@string/movie_banner"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/no_item_text"/>
-    </LinearLayout>
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"

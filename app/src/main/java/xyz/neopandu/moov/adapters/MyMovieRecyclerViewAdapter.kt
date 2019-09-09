@@ -2,6 +2,7 @@ package xyz.neopandu.moov.adapters
 
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_item_movie.view.*
+import kotlinx.android.synthetic.main.view_empty_list.view.*
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.flow.main.OnListFragmentInteractionListener
 import xyz.neopandu.moov.models.Movie
@@ -23,7 +25,7 @@ import java.util.*
 class MyMovieRecyclerViewAdapter(
     private val context: Context,
     private val mListener: OnListFragmentInteractionListener?
-) : RecyclerView.Adapter<MyMovieRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
     private val mValues: MutableList<Movie> = mutableListOf()
@@ -31,11 +33,17 @@ class MyMovieRecyclerViewAdapter(
 
     private val mOnFavoriteButtonClicked: (Movie) -> Unit
 
+    var emptyDrawable: Drawable? = null
+    var emptyMessage: String? = null
+
+    companion object {
+        const val EMPTY_LIST_VIEWTYPE = 0
+        const val BANNER_VIEWTYPE = 1
+    }
+
     init {
         mOnClickListener = View.OnClickListener { v ->
             val item = v.tag as Movie
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
         }
 
@@ -63,18 +71,50 @@ class MyMovieRecyclerViewAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_item_movie, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            EMPTY_LIST_VIEWTYPE -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.view_empty_list, parent, false)
+                EmptyViewHolder(view)
+            }
+            BANNER_VIEWTYPE -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.row_item_movie, parent, false)
+                ViewHolder(view)
+            }
+            else -> throw RuntimeException("Unknown view type")
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is EmptyViewHolder) {
+            holder.bind()
+            return
+        }
         val item = mValues[position]
-        holder.bind(item)
+        if (holder is ViewHolder) holder.bind(item)
     }
 
-    override fun getItemCount(): Int = mValues.size
+    override fun getItemViewType(position: Int): Int {
+        return if (mValues.isEmpty()) EMPTY_LIST_VIEWTYPE else BANNER_VIEWTYPE
+    }
+
+    override fun getItemCount(): Int = if (mValues.isEmpty()) 1 else mValues.size
+
+    inner class EmptyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val imageView = view.error_image
+        private val textView = view.error_view_text
+
+        fun bind() {
+            emptyDrawable?.let {
+                imageView.setImageDrawable(it)
+            }
+            emptyMessage?.let {
+                textView.text = it
+            }
+        }
+    }
 
     inner class ViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
         private val mBanner: ImageView = mView.img_banner
