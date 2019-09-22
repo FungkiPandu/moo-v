@@ -23,4 +23,6 @@
     <string name="favorite_button">favorite button</string>
     <string name="no_item_text">No item yet to be shown</string>
     <string name="search">Search</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

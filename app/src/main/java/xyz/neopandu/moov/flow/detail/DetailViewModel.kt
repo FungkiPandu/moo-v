@@ -13,7 +13,7 @@ import xyz.neopandu.moov.models.Movie
 
 class DetailViewModel(application: Application) : ViewModel() {
 
-    private val favoriteRepository = FavoriteRepository(application)
+    private val favoriteRepository = FavoriteRepository(application.applicationContext)
 
     private val _isFavorite = MutableLiveData<Boolean>()
     val isFavorite: LiveData<Boolean>
@@ -39,12 +39,12 @@ class DetailViewModel(application: Application) : ViewModel() {
         }
     }
 
-    private suspend fun removeFavoriteAsync(movie: Movie): Deferred<Unit> =
+    private fun removeFavoriteAsync(movie: Movie): Deferred<Unit> =
         GlobalScope.async {
             favoriteRepository.deleteSavedMovie(movie)
         }
 
-    private suspend fun addFavoriteAsync(movie: Movie): Deferred<Unit> =
+    private fun addFavoriteAsync(movie: Movie): Deferred<Unit> =
         GlobalScope.async {
             favoriteRepository.saveMovie(movie)
         }

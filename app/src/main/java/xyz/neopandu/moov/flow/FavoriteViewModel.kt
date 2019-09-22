@@ -30,12 +30,12 @@ class FavoriteViewModel(application: Application) : ViewModel() {
         }
     }
 
-    private suspend fun removeFavoriteAsync(movie: Movie): Deferred<Unit> =
+    private fun removeFavoriteAsync(movie: Movie): Deferred<Unit> =
         GlobalScope.async {
             favoriteRepository.deleteSavedMovie(movie)
         }
 
-    private suspend fun addFavoriteAsync(movie: Movie): Deferred<Unit> =
+    private fun addFavoriteAsync(movie: Movie): Deferred<Unit> =
         GlobalScope.async {
             favoriteRepository.saveMovie(movie)
         }

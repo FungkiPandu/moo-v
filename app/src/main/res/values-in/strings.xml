@@ -20,4 +20,6 @@
     <string name="favorite_button">Tombol suka</string>
     <string name="no_item_text">Belum ada item yang dapat ditampilkan</string>
     <string name="search">Pencarian</string>
+    <string name="appwidget_text">CONTOH</string>
+    <string name="add_widget">Tambah widget</string>
 </resources>

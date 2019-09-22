@@ -1,18 +1,24 @@
 package xyz.neopandu.moov.data.repository
 
-import android.app.Application
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Context
+import android.database.Cursor
 import androidx.lifecycle.LiveData
+import xyz.neopandu.moov.R
 import xyz.neopandu.moov.data.FavoriteDao
 import xyz.neopandu.moov.data.database.MovieDatabase
 import xyz.neopandu.moov.models.Movie
+import xyz.neopandu.moov.widget.FavoriteMoviesWidget
 
-class FavoriteRepository(application: Application) {
+
+class FavoriteRepository(private val applicationContext: Context) {
 
     private lateinit var favoriteDao: FavoriteDao
 
 
     init {
-        val database: MovieDatabase? = MovieDatabase.getInstance(application.applicationContext)
+        val database: MovieDatabase? = MovieDatabase.getInstance(applicationContext)
         database?.let {
             favoriteDao = it.favoriteDao()
         }
@@ -21,20 +27,37 @@ class FavoriteRepository(application: Application) {
     fun getFavoriteMoviesLiveData(): LiveData<List<Movie>> = favoriteDao.favoriteMovies()
     fun getFavoriteTVsLiveData(): LiveData<List<Movie>> = favoriteDao.favoriteTVs()
 
-    suspend fun saveMovie(movie: Movie) {
+    private fun updateWidgets() {
+        val appWidgetManager = AppWidgetManager.getInstance(applicationContext)
+        val ids = appWidgetManager.getAppWidgetIds(
+            ComponentName(
+                applicationContext,
+                FavoriteMoviesWidget::class.java
+            )
+        )
+        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.stack_view)
+    }
+
+    fun saveMovie(movie: Movie) {
         favoriteDao.saveMovie(movie)
+        updateWidgets()
     }
 
     suspend fun getMovies(): List<Movie> {
         return favoriteDao.loadFavoriteMovies()
     }
 
+    fun getMoviesCursor(): Cursor {
+        return favoriteDao.favoriteMoviesCursor()
+    }
+
     suspend fun getTVs(): List<Movie> {
         return favoriteDao.loadFavoriteTVs()
     }
 
-    suspend fun deleteSavedMovie(movie: Movie) {
-        return favoriteDao.deleteFavorite(movie)
+    fun deleteSavedMovie(movie: Movie) {
+        favoriteDao.deleteFavorite(movie)
+        updateWidgets()
     }
 
     suspend fun isFavorite(movieId: Int): Boolean {

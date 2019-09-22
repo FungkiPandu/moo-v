@@ -1,5 +1,6 @@
 package xyz.neopandu.moov.data
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
@@ -11,7 +12,7 @@ import xyz.neopandu.moov.models.Movie
 interface FavoriteDao {
 
     @Insert
-    suspend fun saveMovie(movie: Movie)
+    fun saveMovie(movie: Movie)
 
     @Query("SELECT * FROM movie WHERE movieType = 'TV_SHOW'")
     suspend fun loadFavoriteTVs(): List<Movie>
@@ -22,6 +23,9 @@ interface FavoriteDao {
     @Query("SELECT * FROM movie WHERE movieType = 'MOVIE'")
     fun favoriteMovies(): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM movie WHERE movieType = 'MOVIE'")
+    fun favoriteMoviesCursor(): Cursor
+
     @Query("SELECT * FROM movie WHERE movieType = 'TV_SHOW'")
     fun favoriteTVs(): LiveData<List<Movie>>
 
@@ -29,5 +33,5 @@ interface FavoriteDao {
     suspend fun getMovieById(movieId: Int): List<Movie>
 
     @Delete
-    suspend fun deleteFavorite(movie: Movie)
+    fun deleteFavorite(movie: Movie)
 }
