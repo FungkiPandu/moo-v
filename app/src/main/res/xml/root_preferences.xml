@@ -1,0 +1,46 @@
+<!--
+  ~ Copyright 2018 The app Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/preferences">
+        <Preference
+            app:icon="@drawable/ic_g_translate_white_24dp"
+            app:key="@string/language"
+            app:summary="Current language"
+            app:title="@string/language" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/reminder">
+
+        <SwitchPreferenceCompat
+            app:key="@string/airing_today_reminder"
+            app:summary="Remind your favorite TV every 7:30 AM if airing on that day"
+            app:title="@string/airing_today_reminder" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/release_reminder"
+            app:summary="Remind you every 8:00 AM if there is any release Movie on that day"
+            app:title="@string/release_reminder" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/daily_reminder"
+            app:summary="Remind you every 7:00 AM to make you up to date"
+            app:title="@string/daily_reminder" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -3,7 +3,6 @@ package xyz.neopandu.moov.flow.main.movieList
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,7 @@ import xyz.neopandu.moov.flow.FavoriteViewModelFactory
 import xyz.neopandu.moov.flow.main.MainViewModel
 import xyz.neopandu.moov.flow.main.OnListFragmentInteractionListener
 import xyz.neopandu.moov.flow.search.SearchActivity
+import xyz.neopandu.moov.flow.setting.PreferenceActivity
 
 /**
  * A fragment representing a list of Items.
@@ -97,12 +97,11 @@ class MovieFragment : Fragment() {
         toolbar.inflateMenu(R.menu.main_menu)
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_change_settings -> {
-                    val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-                    startActivity(mIntent)
-                }
                 R.id.action_search -> {
                     startActivity(Intent(requireActivity(), SearchActivity::class.java))
+                }
+                R.id.action_preferences -> {
+                    startActivity(Intent(requireActivity(), PreferenceActivity::class.java))
                 }
             }
             super.onOptionsItemSelected(it)

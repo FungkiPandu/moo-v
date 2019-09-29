@@ -15,6 +15,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".flow.setting.PreferenceActivity"
+            android:label="@string/title_activity_preference"></activity>
+        <activity
             android:name=".flow.search.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

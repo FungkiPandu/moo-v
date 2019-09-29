@@ -4,6 +4,7 @@
     <string name="banner_base_url" translatable="false">https://image.tmdb.org/t/p/w780</string>
     <string name="poster_base_url" translatable="false">https://image.tmdb.org/t/p/w780</string>
 
+
     <string name="movie_banner">Movie banner</string>
     <string name="title_movie">Movie</string>
     <string name="title_tv_show">TV Show</string>
@@ -25,4 +26,20 @@
     <string name="search">Search</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+
+    <!-- Preference -->
+    <string name="language">Language</string>
+    <string name="airing_today_reminder">Airing Today reminder</string>
+    <string name="airing_today_reminder_summary">Remind your favorite TVs every 7:30 AM if airing on that day</string>
+    <string name="release_reminder">Release reminder</string>
+    <string name="release_reminder_summary">Remind you every 8:00 AM if there is any release Movie on that day</string>
+    <string name="daily_reminder">Daily reminder</string>
+    <string name="daily_reminder_summary">Remind you every 7:00 AM to make you up to date</string>
+
+    <string name="title_activity_preference">Preference</string>
+
+    <!-- Preference Titles -->
+    <string name="preferences">Preferences</string>
+    <string name="reminder">Reminder</string>
 </resources>

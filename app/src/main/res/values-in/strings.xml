@@ -22,4 +22,14 @@
     <string name="search">Pencarian</string>
     <string name="appwidget_text">CONTOH</string>
     <string name="add_widget">Tambah widget</string>
+    <string name="preferences">Pengaturan</string>
+    <string name="language">Bahasa</string>
+    <string name="release_reminder">Rilis Harian</string>
+    <string name="reminder">Peningat</string>
+    <string name="daily_reminder">Harian</string>
+    <string name="airing_today_reminder">Acara TV kesukaan hari Ini</string>
+    <string name="release_reminder_summary">Pengingat setiap jam 8 pagi jika ada film yang rilis di hari itu</string>
+    <string name="title_activity_preference">Pengaturan</string>
+    <string name="airing_today_reminder_summary">Pengingat acara TV kesukaan yang tayang pada hari ini</string>
+    <string name="daily_reminder_summary">Peningingat setiap jam 7 pagi untuk membuatmu lebih up to date</string>
 </resources>

@@ -7,8 +7,8 @@
         android:title="@string/search"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_change_settings"
-        android:title="@string/change_language_settings"
+        android:id="@+id/action_preferences"
+        android:icon="@drawable/ic_settings_white_24dp"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_g_translate_white_24dp"/>
+        android:title="@string/preferences" />
 </menu>
