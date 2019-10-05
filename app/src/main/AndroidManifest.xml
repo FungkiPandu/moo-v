@@ -13,10 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <receiver
+            android:name=".data.receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver" />
+
         <activity
             android:name=".flow.setting.PreferenceActivity"
-            android:label="@string/title_activity_preference"></activity>
+            android:label="@string/title_activity_preference" />
         <activity
             android:name=".flow.search.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />

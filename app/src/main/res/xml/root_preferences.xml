@@ -16,7 +16,9 @@
 
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/preferences">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/preferences">
         <Preference
             app:icon="@drawable/ic_g_translate_white_24dp"
             app:key="@string/language"
@@ -24,21 +26,26 @@
             app:title="@string/language" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/reminder">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/reminder">
 
         <SwitchPreferenceCompat
-            app:key="@string/airing_today_reminder"
-            app:summary="Remind your favorite TV every 7:30 AM if airing on that day"
+            app:iconSpaceReserved="false"
+            app:key="@string/airing_today_reminder_key"
+            app:summary="@string/airing_today_reminder_summary"
             app:title="@string/airing_today_reminder" />
 
         <SwitchPreferenceCompat
-            app:key="@string/release_reminder"
-            app:summary="Remind you every 8:00 AM if there is any release Movie on that day"
+            app:iconSpaceReserved="false"
+            app:key="@string/release_reminder_key"
+            app:summary="@string/release_reminder_summary"
             app:title="@string/release_reminder" />
 
         <SwitchPreferenceCompat
-            app:key="@string/daily_reminder"
-            app:summary="Remind you every 7:00 AM to make you up to date"
+            app:iconSpaceReserved="false"
+            app:key="@string/daily_reminder_key"
+            app:summary="@string/daily_reminder_summary"
             app:title="@string/daily_reminder" />
 
     </PreferenceCategory>

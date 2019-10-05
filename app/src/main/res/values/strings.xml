@@ -30,10 +30,13 @@
 
     <!-- Preference -->
     <string name="language">Language</string>
+    <string name="airing_today_reminder_key" translatable="false">airing_today_reminder_key</string>
     <string name="airing_today_reminder">Airing Today reminder</string>
     <string name="airing_today_reminder_summary">Remind your favorite TVs every 7:30 AM if airing on that day</string>
+    <string name="release_reminder_key" translatable="false">release_reminder_key</string>
     <string name="release_reminder">Release reminder</string>
     <string name="release_reminder_summary">Remind you every 8:00 AM if there is any release Movie on that day</string>
+    <string name="daily_reminder_key" translatable="false">daily_reminder_key</string>
     <string name="daily_reminder">Daily reminder</string>
     <string name="daily_reminder_summary">Remind you every 7:00 AM to make you up to date</string>
 
