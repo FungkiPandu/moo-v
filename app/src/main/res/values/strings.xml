@@ -32,7 +32,7 @@
     <string name="language">Language</string>
     <string name="airing_today_reminder_key" translatable="false">airing_today_reminder_key</string>
     <string name="airing_today_reminder">Airing Today reminder</string>
-    <string name="airing_today_reminder_summary">Remind your favorite TVs every 7:30 AM if airing on that day</string>
+    <string name="airing_today_reminder_summary">Remind TV shows which airing on that day every 7:30 AM</string>
     <string name="release_reminder_key" translatable="false">release_reminder_key</string>
     <string name="release_reminder">Release reminder</string>
     <string name="release_reminder_summary">Remind you every 8:00 AM if there is any release Movie on that day</string>
@@ -45,4 +45,28 @@
     <!-- Preference Titles -->
     <string name="preferences">Preferences</string>
     <string name="reminder">Reminder</string>
+
+
+    <!-- Reminder Notification -->
+    <string name="daily_reminder_message">
+        Knock, knock, knock! Is there any human here? Let`s find your favorite Movies and TV Shows here!
+    </string>
+    <string name="release_reminder_title_notification">
+        What`s new today?
+    </string>
+    <string name="release_reminder_message">
+        Today is the first day for %s movie and %d other movies! Click to find more here
+    </string>
+    <string name="release_reminder_message2">
+        There are any new movies release today! Check them now!
+    </string>
+    <string name="airing_today_reminder_title_notification">
+        What will airing today
+    </string>
+    <string name="airing_today_reminder_message">
+        %s airing today! Don\'t miss it!
+    </string>
+    <string name="airing_today_reminder_message2">
+        Check and find your favorite TV show which airing today! Click to find them!
+    </string>
 </resources>

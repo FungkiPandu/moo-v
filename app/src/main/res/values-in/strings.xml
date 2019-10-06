@@ -27,9 +27,33 @@
     <string name="release_reminder">Rilis Harian</string>
     <string name="reminder">Peningat</string>
     <string name="daily_reminder">Harian</string>
-    <string name="airing_today_reminder">Acara TV kesukaan hari Ini</string>
+    <string name="airing_today_reminder">Acara TV hari Ini</string>
     <string name="release_reminder_summary">Pengingat setiap jam 8 pagi jika ada film yang rilis di hari itu</string>
     <string name="title_activity_preference">Pengaturan</string>
-    <string name="airing_today_reminder_summary">Pengingat acara TV kesukaan yang tayang pada hari ini</string>
+    <string name="airing_today_reminder_summary">Pengingat setiap jam 7.30 pagi tentang acara TV yang tayang pada hari ini</string>
     <string name="daily_reminder_summary">Peningingat setiap jam 7 pagi untuk membuatmu lebih up to date</string>
+
+
+    <!-- Reminder Notification -->
+    <string name="daily_reminder_message">
+        Tok, tok, tok! Ada manusia disini? Yuk temukan film dan acara tv kamu di applikasi ini!
+    </string>
+    <string name="release_reminder_title_notification">
+        Apa yang baru hari ini?
+    </string>
+    <string name="release_reminder_message">
+        Hari ini adalah hari pertama untuk film %s dan %d film lainnya! Klik untuk cari lebih lanjut
+    </string>
+    <string name="release_reminder_message2">
+        Ada banyak film loh yang rilis hari ini! Ayo cek sekarang!
+    </string>
+    <string name="airing_today_reminder_title_notification">
+        Apa yang akan tayang hari ini?
+    </string>
+    <string name="airing_today_reminder_message">
+        %s tayang hari ini! Jangan lewatkan episodenya!
+    </string>
+    <string name="airing_today_reminder_message2">
+        Ayo cari dan temukan acara TV kesukaanmu hari ini dengan klik notifikasi ini!
+    </string>
 </resources>
