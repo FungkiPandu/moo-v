@@ -10,7 +10,11 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import xyz.neopandu.moov.R
+import xyz.neopandu.moov.data.database.DBContract
 import xyz.neopandu.moov.models.Movie
 
 class DetailActivity : AppCompatActivity() {
@@ -102,11 +106,26 @@ class DetailActivity : AppCompatActivity() {
             R.id.action_favorite -> {
                 item?.let {
                     viewModel.toggleFavorite(it)
+                    GlobalScope.launch {
+                        delay(1000)
+                        notifyConsumerProvider()
+                    }
                 }
             }
 
         }
         return false
+    }
+
+    private fun notifyConsumerProvider(){
+        applicationContext.contentResolver?.notifyChange(
+            DBContract.MovieColumns.CONTENT_URI_MOVIE,
+            null
+        )
+        application.applicationContext.contentResolver?.notifyChange(
+            DBContract.MovieColumns.CONTENT_URI_TV,
+            null
+        )
     }
 
     companion object {

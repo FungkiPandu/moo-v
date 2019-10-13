@@ -29,9 +29,15 @@ interface FavoriteDao {
     @Query("SELECT * FROM movie WHERE movieType = 'TV_SHOW'")
     fun favoriteTVs(): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM movie WHERE movieType = 'TV_SHOW'")
+    fun favoriteTVsCursor(): Cursor
+
     @Query("SELECT * FROM movie WHERE id = :movieId")
     suspend fun getMovieById(movieId: Int): List<Movie>
 
     @Delete
     fun deleteFavorite(movie: Movie)
+
+    @Query("DELETE FROM movie WHERE id = :movieId")
+    fun deleteFavoriteById(movieId: Int) : Int
 }

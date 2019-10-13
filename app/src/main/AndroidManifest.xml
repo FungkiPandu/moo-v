@@ -5,6 +5,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <permission android:name="xyz.neopandu.moov.provider.READ_DATABASE" android:protectionLevel="normal" />
+    <permission android:name="xyz.neopandu.moov.provider.WRITE_DATABASE" android:protectionLevel="normal" />
+
     <application
         android:name=".MooVeApplication"
         android:allowBackup="true"
@@ -54,6 +57,14 @@
         <service
             android:name=".widget.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <provider
+            android:authorities="xyz.neopandu.moov.provider"
+            android:name=".provider.FavoriteProvider"
+            android:exported="true"
+            android:enabled="true"
+            android:readPermission="xyz.neopandu.moov.provider.READ_DATABASE"
+            android:writePermission="xyz.neopandu.moov.provider.WRITE_DATABASE" />
     </application>
 
 </manifest>

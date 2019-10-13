@@ -8,6 +8,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import xyz.neopandu.moov.data.database.DBContract
 import xyz.neopandu.moov.data.repository.FavoriteRepository
 import xyz.neopandu.moov.models.Movie
 
@@ -46,7 +47,7 @@ class DetailViewModel(application: Application) : ViewModel() {
 
     private fun addFavoriteAsync(movie: Movie): Deferred<Unit> =
         GlobalScope.async {
-            favoriteRepository.saveMovie(movie)
+           favoriteRepository.saveMovie(movie)
         }
 
 }
