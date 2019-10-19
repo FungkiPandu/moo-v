@@ -56,4 +56,6 @@
     <string name="airing_today_reminder_message2">
         Ayo cari dan temukan acara TV kesukaanmu hari ini dengan klik notifikasi ini!
     </string>
+    <string name="favorite_movies">Film favorit</string>
+    <string name="favorite_tvs">Acara TV favorit</string>
 </resources>

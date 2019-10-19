@@ -9,14 +9,15 @@ import android.net.Uri
 import android.widget.RemoteViews
 import android.widget.Toast
 import xyz.neopandu.moov.R
+import xyz.neopandu.moov.data.database.DBContract.MovieColumns.Companion.MOVIE_TYPE
 import xyz.neopandu.moov.flow.detail.DetailActivity
+import xyz.neopandu.moov.models.Movie
+import xyz.neopandu.moov.widget.StackWidgetService.Companion.EXTRA_ITEM
+import xyz.neopandu.moov.widget.StackWidgetService.Companion.TOAST_ACTION
 
 class FavoriteMoviesWidget : AppWidgetProvider() {
 
     companion object {
-        const val TOAST_ACTION = "com.dicoding.picodiploma.TOAST_ACTION"
-        const val EXTRA_ITEM = "com.dicoding.picodiploma.EXTRA_ITEM"
-
         @JvmStatic
         fun updateAppWidget(
             context: Context,
@@ -25,11 +26,14 @@ class FavoriteMoviesWidget : AppWidgetProvider() {
         ) {
             val intent = Intent(context, StackWidgetService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            intent.putExtra(MOVIE_TYPE, Movie.MovieType.MOVIE.name)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
             val views = RemoteViews(context.packageName, R.layout.favorite_movie_banners_widget)
             views.setRemoteAdapter(R.id.stack_view, intent)
             views.setEmptyView(R.id.stack_view, R.id.empty_view)
+
+            views.setTextViewText(R.id.banner_text, context.getText(R.string.favorite_movies))
 
             val toastIntent = Intent(context, FavoriteMoviesWidget::class.java)
             toastIntent.action = TOAST_ACTION

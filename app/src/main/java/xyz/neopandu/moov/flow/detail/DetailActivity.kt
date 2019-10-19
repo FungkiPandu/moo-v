@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.data.database.DBContract
 import xyz.neopandu.moov.models.Movie
-import xyz.neopandu.moov.widget.FavoriteMoviesWidget.Companion.EXTRA_ITEM
+import xyz.neopandu.moov.widget.StackWidgetService.Companion.EXTRA_ITEM
 
 class DetailActivity : AppCompatActivity() {
 

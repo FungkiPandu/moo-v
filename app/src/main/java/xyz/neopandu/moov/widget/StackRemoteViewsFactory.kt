@@ -10,9 +10,13 @@ import xyz.neopandu.moov.R
 import xyz.neopandu.moov.data.repository.FavoriteRepository
 import xyz.neopandu.moov.helper.toMovies
 import xyz.neopandu.moov.models.Movie
+import xyz.neopandu.moov.widget.StackWidgetService.Companion.EXTRA_ITEM
 
 
-class StackRemoteViewsFactory(private val applicationContext: Context) :
+class StackRemoteViewsFactory(
+    private val applicationContext: Context,
+    private val movieType: Movie.MovieType
+) :
     RemoteViewsService.RemoteViewsFactory {
 
     private val widgetImages = mutableListOf<Movie>()
@@ -29,7 +33,9 @@ class StackRemoteViewsFactory(private val applicationContext: Context) :
     }
 
     override fun onDataSetChanged() {
-        val cursor = favoriteRepository.getMoviesCursor()
+        val cursor =
+            if (movieType == Movie.MovieType.MOVIE) favoriteRepository.getMoviesCursor()
+            else favoriteRepository.getTVsCursor()
         widgetImages.clear()
         widgetImages.addAll(cursor.toMovies().filter { it.bannerPath != "null" })
         cursor.close()
@@ -45,7 +51,7 @@ class StackRemoteViewsFactory(private val applicationContext: Context) :
         rv.setImageViewBitmap(R.id.imageView, banner)
 
         val extras = Bundle()
-        extras.putBundle(FavoriteMoviesWidget.EXTRA_ITEM, item.asBundle())
+        extras.putBundle(EXTRA_ITEM, item.asBundle())
         val fillInIntent = Intent()
         fillInIntent.putExtras(extras)
 

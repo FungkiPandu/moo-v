@@ -27,7 +27,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
-
     <!-- Preference -->
     <string name="language">Language</string>
     <string name="airing_today_reminder_key" translatable="false">airing_today_reminder_key</string>
@@ -69,4 +68,6 @@
     <string name="airing_today_reminder_message2">
         Check and find your favorite TV show which airing today! Click to find them!
     </string>
+    <string name="favorite_movies">Favorite movies</string>
+    <string name="favorite_tvs">Favorite TV shows</string>
 </resources>

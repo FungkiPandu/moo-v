@@ -44,7 +44,20 @@
 
         <receiver
             android:name=".widget.FavoriteMoviesWidget"
-            android:label="Favorite Movies Widget">
+            android:label="@string/favorite_movies">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_movie_banners_widget_info" />
+        </receiver>
+
+
+        <receiver
+            android:name=".widget.FavoriteTVsWidget"
+            android:label="@string/favorite_tvs">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
