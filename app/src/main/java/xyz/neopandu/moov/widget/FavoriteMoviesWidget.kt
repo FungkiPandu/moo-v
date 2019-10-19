@@ -9,6 +9,7 @@ import android.net.Uri
 import android.widget.RemoteViews
 import android.widget.Toast
 import xyz.neopandu.moov.R
+import xyz.neopandu.moov.flow.detail.DetailActivity
 
 class FavoriteMoviesWidget : AppWidgetProvider() {
 
@@ -69,10 +70,10 @@ class FavoriteMoviesWidget : AppWidgetProvider() {
         super.onReceive(context, intent)
         if (intent?.action != null) {
             if (intent.action.equals(TOAST_ACTION)) {
-                val selectedMovie = intent.getStringExtra(EXTRA_ITEM)
-//                context?.startActivity(Intent(context, DetailActivity::class.java)
-//                    .putExtra(DetailActivity.EXTRA_MOVIE_KEY, selectedMovie))
-                Toast.makeText(context, "$selectedMovie clicked", Toast.LENGTH_SHORT).show()
+                val selectedMovie = intent.getBundleExtra(EXTRA_ITEM)
+                context?.startActivity(Intent(context, DetailActivity::class.java)
+                    .putExtra(EXTRA_ITEM, selectedMovie))
+//                Toast.makeText(context, "$selectedMovie clicked", Toast.LENGTH_SHORT).show()
             }
         }
     }

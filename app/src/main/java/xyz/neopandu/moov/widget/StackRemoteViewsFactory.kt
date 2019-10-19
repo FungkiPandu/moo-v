@@ -45,7 +45,7 @@ class StackRemoteViewsFactory(private val applicationContext: Context) :
         rv.setImageViewBitmap(R.id.imageView, banner)
 
         val extras = Bundle()
-        extras.putString(FavoriteMoviesWidget.EXTRA_ITEM, item.title)
+        extras.putBundle(FavoriteMoviesWidget.EXTRA_ITEM, item.asBundle())
         val fillInIntent = Intent()
         fillInIntent.putExtras(extras)
 

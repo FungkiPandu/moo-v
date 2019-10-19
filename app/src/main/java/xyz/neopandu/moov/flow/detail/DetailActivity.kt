@@ -3,6 +3,7 @@ package xyz.neopandu.moov.flow.detail
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,14 +17,19 @@ import kotlinx.coroutines.launch
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.data.database.DBContract
 import xyz.neopandu.moov.models.Movie
+import xyz.neopandu.moov.widget.FavoriteMoviesWidget.Companion.EXTRA_ITEM
 
 class DetailActivity : AppCompatActivity() {
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, DetailViewModelFactory(application)).get(DetailViewModel::class.java)
+        ViewModelProviders.of(this, DetailViewModelFactory(application))
+            .get(DetailViewModel::class.java)
     }
 
-    private val item by lazy { intent?.extras?.getParcelable<Movie>(EXTRA_MOVIE_KEY) }
+    private val item by lazy {
+        intent?.extras?.getParcelable<Movie>(EXTRA_MOVIE_KEY)
+            ?: Movie.fromBundleOrNull(intent?.extras?.getBundle(EXTRA_ITEM))
+    }
 
     private var menuItem: MenuItem? = null
     private var isFavorite = false
@@ -34,6 +40,12 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(detail_toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if (item == null) {
+            Toast.makeText(this, "Data not found", Toast.LENGTH_LONG).show()
+            this.finish()
+            return
+        }
 
         val bannerUrl = getString(R.string.banner_base_url) + item?.posterPath
         Glide.with(this).load(bannerUrl).into(img_detail_backdrop)
@@ -117,7 +129,7 @@ class DetailActivity : AppCompatActivity() {
         return false
     }
 
-    private fun notifyConsumerProvider(){
+    private fun notifyConsumerProvider() {
         applicationContext.contentResolver?.notifyChange(
             DBContract.MovieColumns.CONTENT_URI_MOVIE,
             null
