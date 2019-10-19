@@ -11,12 +11,16 @@ import xyz.neopandu.moov.data.tmdbKey
 import xyz.neopandu.moov.helper.TMDBHelper
 import xyz.neopandu.moov.models.Meta
 import xyz.neopandu.moov.models.Movie
+import java.util.*
 
 class TVRepository {
 
     private fun doRequest(url: String, callback: ResponseListener) {
         Log.e("doRequest", url)
-        AndroidNetworking.get(url).addQueryParameter("api_key", tmdbKey).build()
+        AndroidNetworking.get(url)
+            .addQueryParameter("api_key", tmdbKey)
+            .addQueryParameter("timezone", TimeZone.getDefault().id)
+            .build()
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     response?.let { obj ->

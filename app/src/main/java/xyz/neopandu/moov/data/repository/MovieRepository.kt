@@ -17,7 +17,10 @@ class MovieRepository {
 
     private fun doRequest(url: String, callback: ResponseListener) {
         Log.e("doRequest", url)
-        AndroidNetworking.get(url).addQueryParameter("api_key", tmdbKey).build()
+        AndroidNetworking.get(url)
+            .addQueryParameter("api_key", tmdbKey)
+            .addQueryParameter("timezone", TimeZone.getDefault().id)
+            .build()
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     response?.let { obj ->
