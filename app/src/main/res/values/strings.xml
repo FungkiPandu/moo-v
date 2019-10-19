@@ -70,4 +70,18 @@
     </string>
     <string name="favorite_movies">Favorite movies</string>
     <string name="favorite_tvs">Favorite TV shows</string>
+
+
+    <!--  Movie section titles  -->
+    <string name="popular_title">Popular</string>
+    <string name="release_today_title">Release Today</string>
+    <string name="now_playing_title">Now Playing</string>
+    <string name="upcoming_title">Upcoming</string>
+
+
+    <!--  TV section titles  -->
+    <string name="airing_today_title">Airing Today</string>
+    <string name="on_the_air">On The Air</string>
+    <string name="latest">Latest</string>
+
 </resources>

@@ -58,4 +58,11 @@
     </string>
     <string name="favorite_movies">Film favorit</string>
     <string name="favorite_tvs">Acara TV favorit</string>
+    <string name="airing_today_title">Tayang Hari Ini</string>
+    <string name="latest">Terakhir</string>
+    <string name="now_playing_title">Sedang Tayang</string>
+    <string name="on_the_air">Disiarkan</string>
+    <string name="popular_title">Popular</string>
+    <string name="release_today_title">Rilis Hari Ini</string>
+    <string name="upcoming_title">Mendatang</string>
 </resources>

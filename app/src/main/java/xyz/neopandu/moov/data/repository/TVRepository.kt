@@ -21,7 +21,11 @@ class TVRepository {
                 override fun onResponse(response: JSONObject?) {
                     response?.let { obj ->
                         GlobalScope.launch {
-                            callback.onResponse(parseMeta(obj), parseTVs(obj))
+                            try {
+                                callback.onResponse(parseMeta(obj), parseTVs(obj))
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
                         }
                     }
                 }
@@ -77,6 +81,11 @@ class TVRepository {
 
     fun fetchAiringToday(page: Int = 1, callback: ResponseListener) {
         val url = TMDBHelper.tmdbURL.TV.AiringToday().setPage(page).url
+        doRequest(url, callback)
+    }
+
+    fun fetchOnTheAir(page: Int = 1, callback: ResponseListener) {
+        val url = TMDBHelper.tmdbURL.TV.OnTheAir().setPage(page).url
         doRequest(url, callback)
     }
 

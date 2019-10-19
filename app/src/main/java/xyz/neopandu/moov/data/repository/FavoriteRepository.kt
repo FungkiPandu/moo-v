@@ -7,7 +7,6 @@ import android.database.Cursor
 import androidx.lifecycle.LiveData
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.data.FavoriteDao
-import xyz.neopandu.moov.data.database.DBContract
 import xyz.neopandu.moov.data.database.MovieDatabase
 import xyz.neopandu.moov.models.Movie
 import xyz.neopandu.moov.widget.FavoriteMoviesWidget
@@ -40,8 +39,12 @@ class FavoriteRepository(private val applicationContext: Context) {
     }
 
     fun saveMovie(movie: Movie) {
-        favoriteDao.saveMovie(movie)
-        updateWidgets()
+        try {
+            favoriteDao.saveMovie(movie)
+            updateWidgets()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     suspend fun getMovies(): List<Movie> {
@@ -66,7 +69,13 @@ class FavoriteRepository(private val applicationContext: Context) {
     }
 
     fun deleteSavedMovieById(movieId: Int) : Int {
-        return favoriteDao.deleteFavoriteById(movieId)
+        return try {
+            favoriteDao.deleteFavoriteById(movieId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0
+        }
+
     }
 
     suspend fun isFavorite(movieId: Int): Boolean {

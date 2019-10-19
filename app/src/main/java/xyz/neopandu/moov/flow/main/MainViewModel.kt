@@ -7,7 +7,6 @@ import com.androidnetworking.error.ANError
 import xyz.neopandu.moov.data.repository.MovieRepository
 import xyz.neopandu.moov.data.repository.ResponseListener
 import xyz.neopandu.moov.data.repository.TVRepository
-import xyz.neopandu.moov.flow.main.movieList.MovieFragment
 import xyz.neopandu.moov.models.Meta
 import xyz.neopandu.moov.models.Movie
 
@@ -35,8 +34,8 @@ class MainViewModel : ViewModel() {
     val tvShows: LiveData<List<Movie>>
         get() = _tvShows
 
-    private val _showError = MutableLiveData<Pair<MovieFragment.FragmentType, () -> Unit>>()
-    val showError: LiveData<Pair<MovieFragment.FragmentType, () -> Unit>>
+    private val _showError = MutableLiveData<Pair<Movie.MovieType, () -> Unit>>()
+    val showError: LiveData<Pair<Movie.MovieType, () -> Unit>>
         get() = _showError
 
     private var _moviePage = 1
@@ -72,7 +71,7 @@ class MainViewModel : ViewModel() {
 
             override fun onError(anError: ANError?) {
                 _showMovieLoading.postValue(false)
-                _showError.postValue(MovieFragment.FragmentType.MOVIE to { fetchMovieList(page) })
+                _showError.postValue(Movie.MovieType.MOVIE to { fetchMovieList(page) })
             }
 
         })
@@ -94,7 +93,7 @@ class MainViewModel : ViewModel() {
 
             override fun onError(anError: ANError?) {
                 _showTVLoading.postValue(false)
-                _showError.postValue(MovieFragment.FragmentType.TV_SHOW to { fetchTvShowList(page) })
+                _showError.postValue(Movie.MovieType.TV_SHOW to { fetchTvShowList(page) })
             }
         })
     }

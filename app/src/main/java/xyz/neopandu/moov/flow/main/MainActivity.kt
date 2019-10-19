@@ -2,10 +2,8 @@ package xyz.neopandu.moov.flow.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,28 +12,41 @@ import xyz.neopandu.moov.flow.FavoriteViewModel
 import xyz.neopandu.moov.flow.FavoriteViewModelFactory
 import xyz.neopandu.moov.flow.detail.DetailActivity
 import xyz.neopandu.moov.flow.main.favorite.FavoriteFragment
-import xyz.neopandu.moov.flow.main.movieList.MovieFragment
+import xyz.neopandu.moov.flow.main.movie.MovieFragment
+import xyz.neopandu.moov.flow.main.movieList.MovieListFragment
 import xyz.neopandu.moov.models.Movie
 
 
 class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
-    private val viewModel by lazy {
-        ViewModelProviders.of(this).get(MainViewModel::class.java)
-    }
     private val favoriteViewModel by lazy {
         ViewModelProviders.of(this, FavoriteViewModelFactory(application))
             .get(FavoriteViewModel::class.java)
     }
-    private val movieFragment =
-        MovieFragment.newInstance(MovieFragment.FragmentType.MOVIE)
-    private val tvShowFragment =
-        MovieFragment.newInstance(MovieFragment.FragmentType.TV_SHOW)
+    private val movieFragment by lazy {
+        MovieFragment.newInstance(
+            Movie.MovieType.MOVIE,
+            listOf(
+                MovieListFragment.MovieEndpoint.POPULAR_MOVIE,
+                MovieListFragment.MovieEndpoint.RELEASE_TODAY,
+                MovieListFragment.MovieEndpoint.NOW_PLAYING,
+                MovieListFragment.MovieEndpoint.UPCOMING
+            )
+        )
+    }
+    private val tvShowFragment by lazy {
+        MovieFragment.newInstance(
+            Movie.MovieType.TV_SHOW,
+            listOf(
+                MovieListFragment.MovieEndpoint.POPULAR_TV,
+                MovieListFragment.MovieEndpoint.AIRING_TODAY,
+                MovieListFragment.MovieEndpoint.ON_THE_AIR
+            )
+        )
+    }
     private val favoriteFragment = FavoriteFragment()
     private val fragmentManager by lazy { supportFragmentManager }
     private var pageFragment: Fragment = movieFragment
-    private var isErrorMovieShowing = false
-    private var isErrorTVShowing = false
 
     private val onNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -59,11 +70,6 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) {
-            viewModel.fetchMovieList(1)
-            viewModel.fetchTvShowList(1)
-        }
-
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         if (savedInstanceState == null) {
             nav_view.selectedItemId = nav_view.menu.getItem(0).itemId
@@ -72,12 +78,7 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
             nav_view.selectedItemId = savedInstanceState.getInt("selectedId")
         }
 
-        viewModel.showError.observe(this, Observer { (movieType, action) ->
-            showErrorDialog(movieType, action)
-        })
-
         //cold start
-        viewModel
         favoriteViewModel
     }
 
@@ -97,37 +98,4 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
     override fun toggleFavoriteButtonClicked(item: Movie) {
         favoriteViewModel.toggleFavorite(item)
     }
-
-    private fun showErrorDialog(movieType: MovieFragment.FragmentType, action: () -> Unit) {
-        if (movieType == MovieFragment.FragmentType.MOVIE && isErrorMovieShowing) return
-        if (movieType == MovieFragment.FragmentType.TV_SHOW && isErrorTVShowing) return
-
-        val ad = AlertDialog.Builder(this).apply {
-            setTitle(getString(R.string.error_dialog_title))
-            setMessage(
-                getString(
-                    R.string.error_dialog_message,
-                    getString(
-                        if (movieType == MovieFragment.FragmentType.MOVIE) R.string.movie_list
-                        else R.string.tv_list
-                    )
-                )
-            )
-            setPositiveButton(R.string.try_again) { _, _ ->
-                action.invoke()
-            }
-            setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-        }.show()
-        if (movieType == MovieFragment.FragmentType.MOVIE)
-            isErrorMovieShowing = true
-        else isErrorTVShowing = true
-        ad.setOnDismissListener {
-            if (movieType == MovieFragment.FragmentType.MOVIE)
-                isErrorMovieShowing = false
-            else isErrorTVShowing = false
-        }
-    }
-
 }

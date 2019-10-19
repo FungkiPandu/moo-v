@@ -1,12 +1,10 @@
 package xyz.neopandu.moov.flow.main.movieList
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,15 +12,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.appbar.AppBarLayout
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.adapters.MyMovieRecyclerViewAdapter
 import xyz.neopandu.moov.flow.FavoriteViewModel
 import xyz.neopandu.moov.flow.FavoriteViewModelFactory
 import xyz.neopandu.moov.flow.main.MainViewModel
 import xyz.neopandu.moov.flow.main.OnListFragmentInteractionListener
-import xyz.neopandu.moov.flow.search.SearchActivity
-import xyz.neopandu.moov.flow.setting.PreferenceActivity
 
 /**
  * A fragment representing a list of Items.
@@ -45,8 +40,6 @@ class MovieFragment : Fragment() {
     private var adapter: MyMovieRecyclerViewAdapter? = null
     private lateinit var movieList: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var appbar: AppBarLayout
-    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,50 +55,13 @@ class MovieFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movie_list, container, false)
 
-        appbar = view.findViewById(R.id.appbar)
-        toolbar = view.findViewById(R.id.toolbar)
         movieList = view.findViewById(R.id.movie_list)
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
 
-        initToolbar()
         initRecyclerView()
         loadData()
 
         return view
-    }
-
-    private fun initToolbar() {
-        when (type) {
-            FragmentType.MOVIE -> {
-                appbar.visibility = View.VISIBLE
-                toolbar.setTitle(R.string.title_movie)
-                setupToolbar()
-            }
-            FragmentType.TV_SHOW -> {
-                appbar.visibility = View.VISIBLE
-                toolbar.setTitle(R.string.title_tv_show)
-                setupToolbar()
-            }
-            FragmentType.FAVORITE_TV, FragmentType.FAVORITE_MOVIE -> {
-                appbar.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun setupToolbar() {
-        toolbar.setSubtitle(R.string.app_name)
-        toolbar.inflateMenu(R.menu.main_menu)
-        toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_search -> {
-                    startActivity(Intent(requireActivity(), SearchActivity::class.java))
-                }
-                R.id.action_preferences -> {
-                    startActivity(Intent(requireActivity(), PreferenceActivity::class.java))
-                }
-            }
-            super.onOptionsItemSelected(it)
-        }
     }
 
     private fun initRecyclerView() {
