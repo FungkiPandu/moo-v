@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:name="xyz.neopandu.moo_ve.flow.main.movieList.MovieFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
-            tools:context=".flow.main.movieList.MovieFragment"
             tools:listitem="@layout/row_item_movie"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

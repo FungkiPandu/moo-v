@@ -1,20 +1,24 @@
 package xyz.neopandu.moov.flow.main.favorite
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import xyz.neopandu.moov.R
 import xyz.neopandu.moov.flow.main.OnListFragmentInteractionListener
+import xyz.neopandu.moov.flow.search.SearchActivity
+import xyz.neopandu.moov.flow.setting.PreferenceActivity
 
 class FavoriteFragment : Fragment() {
     private var listener: OnListFragmentInteractionListener? = null
 
-    //    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: Toolbar
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
 
@@ -25,29 +29,36 @@ class FavoriteFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_favorite, container, false)
 
-//        toolbar = view.findViewById(R.id.fav_toolbar)
+        toolbar = view.findViewById(R.id.fav_toolbar)
         viewPager = view.findViewById(R.id.fav_view_pager)
         tabLayout = view.findViewById(R.id.fav_tab_layout)
 
         viewPager.adapter = FavoritePagerAdapter(requireContext(), childFragmentManager)
         tabLayout.setupWithViewPager(viewPager)
 
+        setupToolbar()
+
         return view
     }
 
-//    private fun initToolbar() {
-//        toolbar.setSubtitle(R.string.app_name)
-//        toolbar.inflateMenu(R.menu.main_menu)
-//        toolbar.setOnMenuItemClickListener {
-//            when(it.itemId) {
-//                R.id.action_change_settings -> {
-//                    val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-//                    startActivity(mIntent)
-//                }
-//            }
-//            super.onOptionsItemSelected(it)
-//        }
-//    }
+    private fun setupToolbar() {
+        with(toolbar) {
+            setTitle(R.string.title_favorite)
+            setSubtitle(R.string.app_name)
+            inflateMenu(R.menu.main_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_search -> {
+                        startActivity(Intent(requireActivity(), SearchActivity::class.java))
+                    }
+                    R.id.action_preferences -> {
+                        startActivity(Intent(requireActivity(), PreferenceActivity::class.java))
+                    }
+                }
+                super.onOptionsItemSelected(it)
+            }
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

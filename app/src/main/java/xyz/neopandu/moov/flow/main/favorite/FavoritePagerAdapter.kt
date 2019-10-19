@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import xyz.neopandu.moov.R
-import xyz.neopandu.moov.flow.main.movieList.MovieFragment
+import xyz.neopandu.moov.models.Movie
 
 class FavoritePagerAdapter(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment = when (position) {
-        0 -> MovieFragment.newInstance(MovieFragment.FragmentType.FAVORITE_MOVIE)
-        else -> MovieFragment.newInstance(MovieFragment.FragmentType.FAVORITE_TV)
+        0 -> FavoriteListFragment.newInstance(Movie.MovieType.MOVIE)
+        else -> FavoriteListFragment.newInstance(Movie.MovieType.TV_SHOW)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

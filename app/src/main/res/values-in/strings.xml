@@ -13,15 +13,11 @@
     <string name="user_score">Penilaian Pengguna</string>
     <string name="error_dialog_title">Kesalahan!</string>
     <string name="error_dialog_message">Terjadi kesalahan ketika mengambil %s dari Server. Silahkan coba lagi</string>
-    <string name="movie_list">daftar film</string>
-    <string name="tv_list">daftar acara TV</string>
     <string name="try_again">Coba Lagi</string>
     <string name="cancel">Batal</string>
     <string name="favorite_button">Tombol suka</string>
     <string name="no_item_text">Belum ada item yang dapat ditampilkan</string>
     <string name="search">Pencarian</string>
-    <string name="appwidget_text">CONTOH</string>
-    <string name="add_widget">Tambah widget</string>
     <string name="preferences">Pengaturan</string>
     <string name="language">Bahasa</string>
     <string name="release_reminder">Rilis Harian</string>
@@ -59,7 +55,6 @@
     <string name="favorite_movies">Film favorit</string>
     <string name="favorite_tvs">Acara TV favorit</string>
     <string name="airing_today_title">Tayang Hari Ini</string>
-    <string name="latest">Terakhir</string>
     <string name="now_playing_title">Sedang Tayang</string>
     <string name="on_the_air">Disiarkan</string>
     <string name="popular_title">Popular</string>

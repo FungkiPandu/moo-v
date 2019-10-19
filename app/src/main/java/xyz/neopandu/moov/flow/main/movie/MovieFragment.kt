@@ -41,7 +41,7 @@ class MovieFragment : Fragment() {
 
         tabLayout.setupWithViewPager(viewPager)
 
-        initToolbar()
+        setupToolbar()
 
         val sectionsPagerAdapter =
             MoviePagerAdapter(requireContext(), sections, childFragmentManager)
@@ -49,11 +49,6 @@ class MovieFragment : Fragment() {
         viewPager.adapter = sectionsPagerAdapter
 
         return view
-    }
-
-    private fun initToolbar() {
-        toolbar.setTitle(R.string.title_movie)
-        setupToolbar()
     }
 
     private fun setupToolbar() {

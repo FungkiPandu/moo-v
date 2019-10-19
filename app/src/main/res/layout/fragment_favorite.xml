@@ -12,16 +12,16 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <!--        <androidx.appcompat.widget.Toolbar-->
-        <!--            android:id="@+id/fav_toolbar"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="?attr/actionBarSize"-->
-        <!--            android:background="?attr/colorPrimary"-->
-        <!--            app:titleTextColor="@color/white"-->
-        <!--            app:title="@string/title_favorite"-->
-        <!--            app:contentInsetStartWithNavigation="0dp"-->
-        <!--            app:layout_scrollFlags="scroll|enterAlways"-->
-        <!--            app:popupTheme="@style/AppTheme.PopupOverlay"/>-->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/fav_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/title_favorite"
+            app:titleTextColor="@color/white" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/fav_tab_layout"
@@ -30,18 +30,6 @@
             app:tabGravity="fill"
             app:tabIndicatorHeight="2.5dp"
             app:tabIconTint="@color/white">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/ic_movie_white_24dp"
-                android:text="@string/title_movie"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/ic_live_tv_white_24dp"
-                android:text="@string/title_tv_show"/>
 
         </com.google.android.material.tabs.TabLayout>
 
