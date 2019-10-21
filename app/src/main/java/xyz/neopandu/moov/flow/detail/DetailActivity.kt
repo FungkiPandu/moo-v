@@ -27,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private val item by lazy {
-        intent?.extras?.getParcelable<Movie>(EXTRA_MOVIE_KEY)
+        intent?.extras?.getParcelable(EXTRA_MOVIE_KEY)
             ?: Movie.fromBundleOrNull(intent?.extras?.getBundle(EXTRA_ITEM))
     }
 
@@ -55,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         /**
-         * hide / remove title in [detail_toolbar_layout] when expanded / expanding, and show title only when collapsed
+         * hide / remove title in detail_toolbar_layout when expanded / expanding, and show title only when collapsed
          */
         var isShow = true
         var scrollRange = -1

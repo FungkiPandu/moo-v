@@ -31,9 +31,7 @@
 
 
     <!-- Reminder Notification -->
-    <string name="daily_reminder_message">
-        Tok, tok, tok! Ada manusia disini? Yuk temukan film dan acara tv kamu di applikasi ini!
-    </string>
+    <string name="daily_reminder_message">Ada manusia disini? Yuk temukan film dan acara tv kamu di applikasi ini!</string>
     <string name="release_reminder_title_notification">
         Apa yang baru hari ini?
     </string>
@@ -60,4 +58,6 @@
     <string name="popular_title">Popular</string>
     <string name="release_today_title">Rilis Hari Ini</string>
     <string name="upcoming_title">Mendatang</string>
+    <string name="daily_reminder_content">Tok, tok, tok!</string>
+    <string name="notification_error_content">Tidak dapat terhubung ke jaringan, tapi..</string>
 </resources>

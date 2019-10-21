@@ -3,6 +3,7 @@
     <string name="change_language_settings">Change language</string>
     <string name="banner_base_url" translatable="false">https://image.tmdb.org/t/p/w780</string>
     <string name="poster_base_url" translatable="false">https://image.tmdb.org/t/p/w780</string>
+    <string name="poster_small_base_url" translatable="false">https://image.tmdb.org/t/p/w185</string>
 
 
     <string name="movie_banner">Movie banner</string>
@@ -43,15 +44,15 @@
 
 
     <!-- Reminder Notification -->
-    <string name="daily_reminder_message">
-        Knock, knock, knock! Is there any human here? Let`s find your favorite Movies and TV Shows here!
-    </string>
+    <string name="daily_reminder_content">Knock, knock, knock!</string>
+    <string name="daily_reminder_message">Is there any human here? Let`s find your favorite Movies and TV Shows here!</string>
     <string name="release_reminder_title_notification">
         What`s new today?
     </string>
     <string name="release_reminder_message">
         Today is the first day for %s movie and %d other movies! Click to find more here
     </string>
+    <string name="notification_error_content">We can\'t connect to your internet. But..</string>
     <string name="release_reminder_message2">
         There are any new movies release today! Check them now!
     </string>
@@ -62,7 +63,7 @@
         %s airing today! Don\'t miss it!
     </string>
     <string name="airing_today_reminder_message2">
-        Check and find your favorite TV show which airing today! Click to find them!
+        Let`s check and find your favorite TV show which airing today! Click to find them!
     </string>
     <string name="favorite_movies">Favorite movies</string>
     <string name="favorite_tvs">Favorite TV shows</string>

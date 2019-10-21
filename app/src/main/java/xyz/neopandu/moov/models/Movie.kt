@@ -43,7 +43,7 @@ data class Movie(
     fun asBundle(): Bundle {
         return Bundle().apply {
             putInt(_ID, id)
-            putString(TITLE, oriTitle)
+            putString(TITLE, title)
             putString(ORI_TITLE, oriTitle)
             putString(ORI_LANG, oriLang)
             putString(DESCRIPTION, description)
@@ -52,7 +52,7 @@ data class Movie(
             putDouble(SCORE, score)
             putDouble(POPULARITY, popularity)
             putString(RELEASE_DATE, releaseDate)
-            putString(MOVIE_TYPE, movieType.value)
+            putString(MOVIE_TYPE, movieType.name)
         }
     }
 
@@ -70,7 +70,7 @@ data class Movie(
                     it.getDouble(SCORE, 0.0),
                     it.getDouble(POPULARITY, 0.0),
                     it.getString(RELEASE_DATE, "N/A"),
-                    MovieType.valueOf(it.getString(MOVIE_TYPE, MovieType.MOVIE.value)),
+                    MovieType.valueOf(it.getString(MOVIE_TYPE, MovieType.MOVIE.name)),
                     true
                 )
             }
