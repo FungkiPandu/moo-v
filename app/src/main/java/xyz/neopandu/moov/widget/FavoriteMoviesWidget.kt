@@ -75,8 +75,10 @@ class FavoriteMoviesWidget : AppWidgetProvider() {
         if (intent?.action != null) {
             if (intent.action.equals(TOAST_ACTION)) {
                 val selectedMovie = intent.getBundleExtra(EXTRA_ITEM)
-                context?.startActivity(Intent(context, DetailActivity::class.java)
-                    .putExtra(EXTRA_ITEM, selectedMovie))
+                context?.startActivity(
+                    Intent(context, DetailActivity::class.java)
+                        .putExtra(EXTRA_ITEM, selectedMovie)
+                )
 //                Toast.makeText(context, "$selectedMovie clicked", Toast.LENGTH_SHORT).show()
             }
         }

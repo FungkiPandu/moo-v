@@ -17,7 +17,6 @@ import xyz.neopandu.moov.data.database.DBContract.MovieColumns.Companion.RELEASE
 import xyz.neopandu.moov.data.database.DBContract.MovieColumns.Companion.SCORE
 import xyz.neopandu.moov.data.database.DBContract.MovieColumns.Companion.TITLE
 import xyz.neopandu.moov.data.database.DBContract.MovieColumns.Companion._ID
-import java.lang.reflect.Array.getDouble
 
 @Parcelize
 @Entity(tableName = "movie")
@@ -57,7 +56,7 @@ data class Movie(
     }
 
     companion object {
-        fun fromBundleOrNull(bundle: Bundle?) : Movie? {
+        fun fromBundleOrNull(bundle: Bundle?): Movie? {
             return bundle?.let {
                 Movie(
                     it.getInt(_ID, 0),

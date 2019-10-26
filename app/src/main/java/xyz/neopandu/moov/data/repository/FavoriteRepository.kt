@@ -68,7 +68,7 @@ class FavoriteRepository(private val applicationContext: Context) {
         updateWidgets()
     }
 
-    fun deleteSavedMovieById(movieId: Int) : Int {
+    fun deleteSavedMovieById(movieId: Int): Int {
         return try {
             favoriteDao.deleteFavoriteById(movieId)
         } catch (e: Exception) {

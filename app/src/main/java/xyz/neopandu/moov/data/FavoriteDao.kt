@@ -39,5 +39,5 @@ interface FavoriteDao {
     fun deleteFavorite(movie: Movie)
 
     @Query("DELETE FROM movie WHERE id = :movieId")
-    fun deleteFavoriteById(movieId: Int) : Int
+    fun deleteFavoriteById(movieId: Int): Int
 }

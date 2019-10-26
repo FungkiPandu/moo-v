@@ -14,6 +14,7 @@ abstract class MovieDatabase : RoomDatabase() {
     companion object {
         @JvmStatic
         private var instance: MovieDatabase? = null
+
         fun getInstance(context: Context): MovieDatabase? {
             if (instance == null) {
                 synchronized(MovieDatabase::class) {
